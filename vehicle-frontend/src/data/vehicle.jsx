@@ -42,7 +42,7 @@ const vehicles = [
     model: 2016,
     location: "Kozhikode",
     price: 28000,
-    category: ["Daily", "Monthly"],
+    category: "Monthly",
     image: "https://imgd.aeplcdn.com/664x374/cw/ec/9709/Maruti-Suzuki-Wagon-R-10-Left-Front-Three-Quarter-88890.jpg?v=201711021421&q=80"
   }
 ];

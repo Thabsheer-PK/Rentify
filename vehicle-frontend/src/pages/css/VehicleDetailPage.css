@@ -1,0 +1,58 @@
+.detail-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.detail-card {
+  display: flex;
+  gap: 30px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  max-width: 800px;
+}
+
+.detail-card img {
+  width: 350px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.detail-info h2 {
+  margin: 0;
+}
+
+.detail-info p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.price {
+  font-size: 22px;
+  font-weight: bold;
+  color: #2ecc71;
+}
+
+.book-btn {
+  margin-top: 20px;
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.book-btn:hover {
+  background: #0056b3;
+}

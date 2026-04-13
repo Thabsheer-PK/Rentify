@@ -1,14 +1,17 @@
 import React from 'react'
 import vehicles from '../data/vehicle'
-import './VehicleCard.css'
+import './css/VehicleCard.css'
+import {useNavigate} from 'react-router-dom'
 
 function VehicleCard() {
+  const navigate = useNavigate();
+
   return (
     <div className='container'>
       {
         vehicles.map((v) => {
           return (
-            <div key={v.id} className='card'>
+            <div key={v.id} className='card' onClick={()=>navigate(`/vehicle/${v.id}`)}>
               <img
                 src={v.image} alt={v.name}
               />
@@ -18,7 +21,7 @@ function VehicleCard() {
                 <p>Location: {v.location}</p>
 
                 <p className='category'>
-                  Category: {Array.isArray(v.category) ? 'Daily or Monthly' : v.category}
+                  Category: {v.category}
                 </p>
               </div>
             </div>
