@@ -71,7 +71,7 @@ function BookVehiclePage() {
       return `VH-${String(id).padStart(3, "F")}`;
     };
 
-    const message = `Booking Request 🚗
+    const message = `Booking Request : --
 
 Vehicle: ${vehicle.name}
 ID: ${getVehicleCode(vehicle.id)}
@@ -88,9 +88,12 @@ Delivery: ${delivery ? "Yes (+₹500)" : "No"}
 Total: ₹${total}
 `;
 
-    window.open(
-      `https://wa.me/9496421787?text=${encodeURIComponent(message)}`
-    );
+     navigate("/booking-success", {
+      state: {
+        message,
+        vehicleName: vehicle.name
+      }
+    });
   };
 
   return (
