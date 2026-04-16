@@ -4,6 +4,7 @@ import VehicleDetailPage from "./pages/VehicleDetailPage"
 import './App.css'
 import Navbar from "./components/Navbar"
 import FilteredVehicles from "./pages/FilteredVehicles"
+import BookVehiclePage from "./pages/BookVehiclePage"
 
 function App() {
   return(
@@ -13,6 +14,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/vehicle/:id" element={<VehicleDetailPage />} />
       <Route path="/vehicles" element={<FilteredVehicles />}/>
+      <Route  path="/booking/:id" element={<BookVehiclePage/>}/>
     </Routes>
     </BrowserRouter>
   )

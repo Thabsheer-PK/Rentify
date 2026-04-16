@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import vehicles from '../data/vehicle'
-import { MapPin, Star, Fuel, Users, Settings } from 'lucide-react'
+import { MapPin, Star, Fuel, Users, Settings, ArrowLeft } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 function VehicleDetailPage() {
   const { id } = useParams();
   const vehicle = vehicles.find((v) => v.id === Number(id));
 
   const [selectedImg, setSelectedImg] = useState(0);
+  const navigate = useNavigate();
 
   if (!vehicle) {
     return (
@@ -21,8 +23,27 @@ function VehicleDetailPage() {
 
   const isDaily = vehicle.category === "daily" || vehicle.category === "event";
 
+  const getVehicleCode = (id) => {
+    return `VH-${String(id).padStart(3, "F")}`;
+  };
+
+  const message = `Hi, I want to book:
+Vehicle Code: ${getVehicleCode(vehicle.id)}
+Name: ${vehicle.name}
+Location: ${vehicle.location}`;
+
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="mb-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-sm text-gray-600 hover:text-black"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to all Vehicles
+        </button>
+      </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
 
@@ -45,8 +66,8 @@ function VehicleDetailPage() {
                 src={img}
                 onClick={() => setSelectedImg(i)}
                 className={`h-16 w-24 object-cover rounded-lg cursor-pointer border-2 ${i === selectedImg
-                    ? "border-orange-500"
-                    : "border-gray-200"
+                  ? "border-orange-500"
+                  : "border-gray-200"
                   }`}
               />
             ))}
@@ -115,7 +136,7 @@ function VehicleDetailPage() {
           <div className="bg-white rounded-lg p-4 shadow-sm">
             <p className="text-sm text-gray-500">
               <a
-                href={`https://wa.me/7356731787?text=Hi, I'm interested in ${vehicle.name} (${vehicle.location}). Please help me with booking.`}
+                href={`https://wa.me/9496421787?text=${encodeURIComponent(message)}`}
                 target="_blank"
                 className="w-full block text-center border border-green-500 text-green-600 py-3 rounded-lg mt-3 hover:bg-green-50"
               >
@@ -147,7 +168,9 @@ function VehicleDetailPage() {
 
             <hr className="my-4" />
 
-            <button className="w-full bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition">
+            <button className="w-full bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition"
+            onClick={()=> navigate(`/booking/${vehicle.id}`)}
+            >
               Book Now
             </button>
 

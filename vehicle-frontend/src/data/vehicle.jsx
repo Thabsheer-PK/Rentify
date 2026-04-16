@@ -24,7 +24,8 @@ const vehicles = [
     },
 
     images: [
-      "https://stimg.cardekho.com/images/carexteriorimages/930x620/Maruti/Maruti-Swift-2011-2014/2522/front-left-side-47.jpg"
+      "https://stimg.cardekho.com/images/carexteriorimages/930x620/Maruti/Maruti-Swift-2011-2014/2522/front-left-side-47.jpg", 
+      "https://imgd.aeplcdn.com/664x374/ec/9676/img/l/Maruti-Suzuki-Swift-Interior-14856.jpg?v=201711021421&q=80"
     ],
 
     availability: true,
