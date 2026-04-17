@@ -198,8 +198,9 @@ Total: ₹${total}
               Get vehicle delivered to your location (+ ₹500)
             </p>
           </div>
-
+      
           <input
+            disabled={!fromDate || !toDate}
             type="checkbox"
             checked={delivery}
             onChange={() => setDelivery(!delivery)}
