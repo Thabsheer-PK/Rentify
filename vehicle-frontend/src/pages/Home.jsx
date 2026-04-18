@@ -2,9 +2,19 @@ import React from 'react'
 import VehicleCard from "../components/VehicleCards";
 import heroBg from '../assets/vehicle-images/hero-bg.jpg'
 import HeroSearch from '../components/HeroSearch'
-import vehicle from '../data/vehicle'
+// import vehicle from '../data/vehicle'
+import { useEffect, useState } from 'react';
+
+
 
 function Home() {
+
+
+  const [vehicles, setVehicles] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/vehicles").then((res => res.json())).then((data => setVehicles(data)))
+  }, [])
   return (
     <div>
 
@@ -43,7 +53,7 @@ function Home() {
 
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
-        {vehicle.map((v) => (
+        {vehicles.map((v) => (
           <VehicleCard key={v.id} vehicle={v} />
         ))}
       </div>

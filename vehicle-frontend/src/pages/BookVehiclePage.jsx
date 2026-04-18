@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import vehicles from "../data/vehicle";
+
 import { ArrowLeft } from "lucide-react";
 
 function BookVehiclePage() {
+  const [vehicles , setVehicles] = useState([])
+
+  useEffect(()=>{
+    fetch("http://localhost:3001/api/vehicles").then((res => res.json())).then((data => setVehicles(data)))
+  },[])
+  
   const { id } = useParams();
   const navigate = useNavigate();
   const vehicle = vehicles.find(v => String(v.id) === id);

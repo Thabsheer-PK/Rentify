@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import vehicles from '../data/vehicle'
+// import vehicles from '../data/vehicle'
 import { MapPin, Star, Fuel, Users, Settings, ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 function VehicleDetailPage() {
+
+  const [vehicles, setVehicles] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:3001/api/vehicles").then((res => res.json())).then((data => setVehicles(data)));
+  }, [])
+
   const { id } = useParams();
   const vehicle = vehicles.find((v) => v.id === Number(id));
 
@@ -13,10 +19,10 @@ function VehicleDetailPage() {
 
   if (!vehicle) {
     return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <h2 className="text-2xl font-semibold text-gray-700">
-          Vehicle Not Found
-        </h2>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto"></div>
+        </div>
       </div>
     );
   }
@@ -169,7 +175,7 @@ Location: ${vehicle.location}`;
             <hr className="my-4" />
 
             <button className="w-full bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition"
-            onClick={()=> navigate(`/booking/${vehicle.id}`)}
+              onClick={() => navigate(`/booking/${vehicle.id}`)}
             >
               Book Now
             </button>

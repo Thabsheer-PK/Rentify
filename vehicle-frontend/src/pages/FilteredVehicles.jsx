@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import VehicleCard from "../components/VehicleCards";
-import VehiclesData from "../data/vehicle"
 
 const locations = ["Kochi", "Thiruvananthapuram", "Kozhikode", "Thrissur", "Alappuzha", "Kollam", "Kannur", "Kottayam", "Palakkad", "Malappuram", "Wayanad"];
 const categories = [
@@ -21,11 +20,15 @@ const Vehicles = () => {
     searchParams.get("category")?.toLowerCase() || ""
   );
 
-  const [vehicles] = useState(VehiclesData);
+  const [vehicles, setVehicles] = useState([]);
   const [loading] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+
+  useEffect(()=>{
+    fetch("http://localhost:3001/api/vehicles").then((res=> res.json())).then((data=> setVehicles(data)))
+  },[])
 
   // 🔥 Filter logic
   const filtered = useMemo(() => {
