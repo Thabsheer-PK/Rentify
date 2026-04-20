@@ -14,6 +14,7 @@ app.listen(3001, "0.0.0.0", () => {
 const cors = require("cors");
 app.use(cors());
 
+app.use(express.json());
 
 // const vehicles = [
 //   {
@@ -186,45 +187,6 @@ app.post('/api/vehicles', async (req, res) => {
   const newVehicle = new Vehicle(req.body);
   await newVehicle.save();
   res.json(newVehicle);
-})
-
-app.get('/send', async (req, res) => {
-  const count = await Vehicle.countDocuments();
-  if (count == 0) {
-    await Vehicle.insertMany([
-      {
-        name: "Swift",
-        brand: "Maruti Suzuki",
-        model: 2012,
-        type: "hatchback",
-        fuel: "petrol",
-        transmission: "manual",
-
-        location: "Malappuram",
-        price: 1500,
-        category: "daily",
-
-        seats: 5,
-        mileage: "22 km/l",
-
-        description: "Comfortable hatchback, best for city rides.",
-
-        owner: {
-          name: "Owner 1",
-          phone: "9999999991",
-          verified: true
-        },
-        images: [
-          "https://stimg.cardekho.com/images/carexteriorimages/930x620/Maruti/Maruti-Swift-2011-2014/2522/front-left-side-47.jpg",
-          "https://imgd.aeplcdn.com/664x374/ec/9676/img/l/Maruti-Suzuki-Swift-Interior-14856.jpg?v=201711021421&q=80"
-        ],
-
-        availability: true,
-        rating: 4.2
-      },
-    ])
-    return res.send("data sended First Time");
-  }
 })
 
 require("dotenv").config()

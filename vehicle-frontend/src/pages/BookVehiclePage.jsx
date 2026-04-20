@@ -24,7 +24,13 @@ function BookVehiclePage() {
   const isInvalidDate = fromDate && toDate && new Date(toDate) < new Date(fromDate);
 
   if (!vehicle) {
-    return <p className="text-center mt-10">Vehicle not found</p>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto"></div>
+        </div>
+      </div>
+    );
   }
 
   const isDaily = vehicle.category === "daily" || vehicle.category === "event";

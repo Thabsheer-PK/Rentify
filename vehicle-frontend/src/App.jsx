@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar"
 import FilteredVehicles from "./pages/FilteredVehicles"
 import BookVehiclePage from "./pages/BookVehiclePage"
 import BookingSuccessPage from "./pages/BookingSuccessPage"
+import AddVehiclePage from "./pages/AddVehiclePage"
 
 function App() {
   return(
@@ -17,6 +18,7 @@ function App() {
       <Route path="/vehicles" element={<FilteredVehicles />}/>
       <Route path="/booking/:id" element={<BookVehiclePage/>}/>
       <Route path="/booking-success" element={<BookingSuccessPage/>} />
+      <Route path="/add-vehicle" element={<AddVehiclePage/>} />
     </Routes>
     </BrowserRouter>
   )

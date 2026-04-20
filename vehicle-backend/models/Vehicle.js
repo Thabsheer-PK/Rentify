@@ -18,9 +18,7 @@ const vehicleSchema = new mongoose.Schema({
     phone: Number,
     verified: Boolean
   },
-
   images: [String],
-
   availability: Boolean,
   rating: Number
 })

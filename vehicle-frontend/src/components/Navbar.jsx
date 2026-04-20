@@ -24,6 +24,9 @@ function Navbar() {
 
       {/* Right Buttons */}
       <div className="flex items-center gap-3">
+        <div onClick={()=> navigate("/add-vehicle")}>
+          <button>Add a Vehicle</button>
+        </div>
         
         {/* Login */}
         <button className="flex items-center gap-1.5 px-3.5 py-1.5 border border-gray-300 bg-white rounded-lg cursor-pointer transition hover:bg-gray-100">

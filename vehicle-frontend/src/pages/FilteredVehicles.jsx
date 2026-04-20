@@ -30,7 +30,7 @@ const Vehicles = () => {
     fetch("http://localhost:3001/api/vehicles").then((res=> res.json())).then((data=> setVehicles(data)))
   },[])
 
-  // 🔥 Filter logic
+  //  Filter logic
   const filtered = useMemo(() => {
     return vehicles.filter(v => {
       // Location filter
@@ -39,7 +39,7 @@ const Vehicles = () => {
       // Category filter
       if (selectedCategory && v.category !== selectedCategory) return false;
 
-      // 🔍 Search filter
+      //  Search filter
       if (searchTerm) {
         const term = searchTerm.toLowerCase();
 
