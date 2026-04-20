@@ -12,7 +12,7 @@ function BookVehiclePage() {
   
   const { id } = useParams();
   const navigate = useNavigate();
-  const vehicle = vehicles.find(v => String(v.id) === id);
+  const vehicle = vehicles.find(v => String(v._id) === id);
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -73,14 +73,12 @@ function BookVehiclePage() {
       return;
     }
 
-    const getVehicleCode = (id) => {
-      return `VH-${String(id).padStart(3, "F")}`;
-    };
+    
 
     const message = `Booking Request : --
 
 Vehicle: ${vehicle.name}
-ID: ${getVehicleCode(vehicle.id)}
+ID: ${vehicle._id}
 
 Name: ${name}
 Phone: ${phone}

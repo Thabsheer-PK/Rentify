@@ -9,7 +9,7 @@ function VehicleCard({ vehicle }) {
 
   return (
     <div
-      onClick={() => navigate(`/vehicle/${vehicle.id}`)}
+      onClick={() => navigate(`/vehicle/${vehicle._id}`)}
       className="cursor-pointer bg-white rounded-2xl shadow-md overflow-hidden 
                  hover:shadow-xl transition duration-300 transform hover:-translate-y-1"
     >

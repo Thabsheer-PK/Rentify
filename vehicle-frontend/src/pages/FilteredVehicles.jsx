@@ -47,7 +47,7 @@ const Vehicles = () => {
           v.name.toLowerCase().includes(term) ||
           v.category.toLowerCase().includes(term) ||
           v.type?.toLowerCase().includes(term) ||
-          String(v.id).includes(term);
+          String(v._id).includes(term);
 
         if (!matches) return false;
       }
@@ -271,7 +271,7 @@ const Vehicles = () => {
             ) : (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {filtered.map(v => (
-                  <VehicleCard key={v.id} vehicle={v} />
+                  <VehicleCard key={v._id} vehicle={v} />
                 ))}
               </div>
             )}

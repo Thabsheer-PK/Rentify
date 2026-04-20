@@ -12,7 +12,7 @@ function VehicleDetailPage() {
   }, [])
 
   const { id } = useParams();
-  const vehicle = vehicles.find((v) => v.id === Number(id));
+  const vehicle = vehicles.find((v) => v._id === String(id));
 
   const [selectedImg, setSelectedImg] = useState(0);
   const navigate = useNavigate();
@@ -29,12 +29,8 @@ function VehicleDetailPage() {
 
   const isDaily = vehicle.category === "daily" || vehicle.category === "event";
 
-  const getVehicleCode = (id) => {
-    return `VH-${String(id).padStart(3, "F")}`;
-  };
-
   const message = `Hi, I want to book:
-Vehicle Code: ${getVehicleCode(vehicle.id)}
+Vehicle Code: ${vehicle._id}
 Name: ${vehicle.name}
 Location: ${vehicle.location}`;
 
@@ -175,7 +171,7 @@ Location: ${vehicle.location}`;
             <hr className="my-4" />
 
             <button className="w-full bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition"
-              onClick={() => navigate(`/booking/${vehicle.id}`)}
+              onClick={() => navigate(`/booking/${vehicle._id}`)}
             >
               Book Now
             </button>
