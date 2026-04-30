@@ -1,6 +1,6 @@
 import React from 'react'
 import VehicleCard from "../components/VehicleCards";
-import heroBg from '../assets/vehicle-images/hero-bg.jpg'
+import heroBg from '../assets/logos/hero-bg.jpg'
 import HeroSearch from '../components/HeroSearch'
 // import vehicle from '../data/vehicle'
 import { useEffect, useState } from 'react';
@@ -15,10 +15,11 @@ function Home() {
   useEffect(() => {
     fetch("http://localhost:3001/api/vehicles").then((res => res.json())).then((data => setVehicles(data)))
   }, [])
+  
   return (
     <div>
 
-      <section className="relative h-[90vh] flex items-center">
+      <section className="relative h-[100vh] flex items-center">
 
         {/* Background Image */}
         <img

@@ -11,20 +11,40 @@ function Login() {
     password: ""
   });
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState({});
+  const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
-    });
+      [e.target.name] : e.target.value
+    })
+
+    setError(prev =>({
+      ...prev,
+      [e.target.name] : ""
+    }))
   };
+  const validate = () =>{
+    const newErrors = {};
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{3,}$/
+    if(!form.email){
+      newErrors.email = "Email is required";
+    }else if(!emailRegex.test(form.email)){
+      newErrors.email = "Please Enter valid Email";
+    }
+
+    setError(newErrors);
+    
+    return Object.keys(newErrors).length === 0;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setError("");
+    if(!validate()) return ;
     setLoading(true);
 
     try {
@@ -41,7 +61,7 @@ function Login() {
 
       if (!res.ok) {
         console.log("step 3, res is not ok")
-        setError(data.message || "Login failed");
+        setServerError(data.message || "Login failed");
         setLoading(false);
         return;
       }
@@ -60,7 +80,7 @@ function Login() {
 
     } catch (error) {
       console.log("catched error", error)
-      setError("Server error. Try again.");
+      setServerError("Server error. Try again.");
     }
 
     setLoading(false);
@@ -92,9 +112,9 @@ function Login() {
               value={form.email}
               onChange={handleChange}
               placeholder="Enter your email"
-              required
               className="w-full h-12 px-4 rounded-xl border border-gray-300 outline-none focus:ring-2 focus:ring-orange-400"
             />
+            {error.email && <p className="text-red-500 text-sm font-medium mt-1">{error.email}</p>}
           </div>
 
           {/* Password */}
@@ -109,15 +129,14 @@ function Login() {
               value={form.password}
               onChange={handleChange}
               placeholder="Enter your password"
-              required
               className="w-full h-12 px-4 rounded-xl border border-gray-300 outline-none focus:ring-2 focus:ring-orange-400"
             />
           </div>
 
           {/* Error */}
-          {error && (
-            <p className="text-red-500 text-sm font-medium">
-              {error}
+          {serverError && (
+            <p className="text-red-500 text-sm font-medium text-center">
+              {serverError}
             </p>
           )}
 

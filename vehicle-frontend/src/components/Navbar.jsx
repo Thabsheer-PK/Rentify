@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import logo from "../assets/vehicle-images/logo5.svg";
 import { User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -7,22 +6,24 @@ import { useAuth } from "../context/AuthContext";
 function Navbar() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  console.log("user in nav",user)
+  console.log("user in nav", user)
   return (
-    <nav className="flex justify-between items-center px-8 py-3 bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <nav className="flex justify-between items-center px-8 py-3 
+bg-white/70 backdrop-blur-md 
+border-b border-white/20 
+sticky top-0 z-50 transition-all duration-300 hover:bg-gray-200 transition-all duration-200">
 
-      {/* Logo */}
       <div
         onClick={() => navigate("/")}
-        className="flex items-center cursor-pointer"
+        className="flex items-center cursor-pointer select-none"
       >
-        <div className="h-10 flex items-center">
-          <img src={logo} alt="logo" className="h-7 w-auto" />
-        </div>
+        <h1 className="relative text-[24px] font-semibold tracking-tight text-gray-900 group">
 
-        <span className="ml-2 text-[22px] font-semibold text-gray-900">
-          Rentify
-        </span>
+          <span className="font-bold">Rent</span>
+          <span className="text-orange-500 font-bold">ify</span>
+
+          <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-orange-500 rounded-full transition-all duration-300 group-hover:w-12"></span>
+        </h1>
       </div>
 
       {/* Right Side */}

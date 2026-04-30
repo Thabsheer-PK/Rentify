@@ -5,7 +5,8 @@ import { useAuth } from "../context/AuthContext";
 
 function Signup() {
   const [loading, setLoading] = useState("")
-  const [error, setError] = useState("")
+  const [error, setError] = useState({})
+  const [serverError, setServerError] = useState("");
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -16,17 +17,45 @@ function Signup() {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+
+    setError(prev => ({
+      ...prev,
+      [e.target.name]: ""
+    }));
   };
 
   const handleRoleChange = (role) => {
     setForm({ ...form, role });
   };
+  const validate = () => {
+    const newErrors = {};
+    if (!form.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{3,}$/
+    if (!form.email) {
+      newErrors.email = "Email is required"
+    } else if (!emailRegex.test(form.email)) {
+      newErrors.email = "Please Enter valid email"
+    }
+    if (!form.password) {
+      newErrors.password = "Password is required"
+    } else if (form.password.length < 6) {
+      newErrors.password = "Please enter minimum 6 characters"
+    }
+    setError(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
     setLoading(true)
 
     try {
+
+
       const res = await fetch("http://localhost:3001/api/signup", {
         method: "POST",
         headers: {
@@ -41,7 +70,7 @@ function Signup() {
       console.log("step 2 done, we got parsed data", data)
       if (!res.ok) {
         console.log("step 3 : not ok")
-        setError(data.message);
+        setServerError(data.message);
         setLoading(false)
         return;
 
@@ -58,7 +87,7 @@ function Signup() {
       navigate("/")
     } catch (error) {
       console.error("Catch error", error)
-      setError("Server error ,try again..")
+      setServerError("Server error ,try again..")
     }
     setLoading(false)
   };
@@ -107,8 +136,9 @@ function Signup() {
                 value={form.name}
                 onChange={handleChange}
                 className="w-full h-12 px-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-orange-400"
-                required
+                
               />
+              {error.name && <p className="text-red-500">{error.name}</p>}
             </div>
 
             {/* Email */}
@@ -123,8 +153,8 @@ function Signup() {
                 value={form.email}
                 onChange={handleChange}
                 className="w-full h-12 px-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-orange-400"
-                required
               />
+              {error.email && <p className="text-red-500">{error.email}</p>}
             </div>
 
             {/* Password */}
@@ -139,8 +169,9 @@ function Signup() {
                 value={form.password}
                 onChange={handleChange}
                 className="w-full h-12 px-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-orange-400"
-                required
+                
               />
+              {error.password && <p className="text-red-500 mt-2 text-sm font-medium">{error.password}</p>}
             </div>
 
             {/* Role */}
@@ -182,9 +213,7 @@ function Signup() {
             </div>
 
             <div>
-              <p className="text-red-500 text-center text-sm font-medium">
-                {error ? error : ''}
-              </p>
+              {serverError && <p className="text-red-500 text-center text-sm font-medium">{serverError}</p>}
             </div>
             {/* Button */}
             <button className="w-full h-14 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white text-md font-semibold transition
