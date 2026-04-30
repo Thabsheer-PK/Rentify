@@ -1,6 +1,22 @@
 const express = require("express");
 const app = express();
 const Vehicle = require("./models/Vehicle")
+const bcrypt = require("bcrypt")
+const User = require("./models/Users")
+const jwt = require("jsonwebtoken")
+
+const verifyLogin = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "No token" });
+  try {
+
+    const decode = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decode;
+    next();
+  } catch {
+    res.status(401).json({ message: "Invalid token" });
+  }
+}
 
 app.get("/", (req, res) => {
   console.log("Request hit!");
@@ -16,169 +32,6 @@ app.use(cors());
 
 app.use(express.json());
 
-// const vehicles = [
-//   {
-//     id: 1,
-//     name: "Swift",
-//     brand: "Maruti Suzuki",
-//     model: 2012,
-//     type: "hatchback",
-//     fuel: "petrol",
-//     transmission: "manual",
-
-//     location: "Malappuram",
-//     price: 1500,
-//     category: "daily",
-
-//     seats: 5,
-//     mileage: "22 km/l",
-
-//     description: "Comfortable hatchback, best for city rides.",
-
-//     owner: {
-//       name: "Owner 1",
-//       phone: "9999999991",
-//       verified: true
-//     },
-
-//     images: [
-//       "https://stimg.cardekho.com/images/carexteriorimages/930x620/Maruti/Maruti-Swift-2011-2014/2522/front-left-side-47.jpg", 
-//       "https://imgd.aeplcdn.com/664x374/ec/9676/img/l/Maruti-Suzuki-Swift-Interior-14856.jpg?v=201711021421&q=80"
-//     ],
-
-//     availability: true,
-//     rating: 4.2
-//   },
-
-//   {
-//     id: 2,
-//     name: "Alto 800",
-//     brand: "Maruti Suzuki",
-//     model: 2015,
-//     type: "hatchback",
-//     fuel: "petrol",
-//     transmission: "manual",
-
-//     location: "Kozhikode",
-//     price: 1000,
-//     category: "daily",
-
-//     seats: 5,
-//     mileage: "24 km/l",
-
-//     description: "Budget-friendly car, suitable for short trips.",
-
-//     owner: {
-//       name: "Owner 2",
-//       phone: "9999999992",
-//       verified: false
-//     },
-
-//     images: [
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwlcCJOhqWlo8eftJ1uuboq352pZq-a0XVMg&s"
-//     ],
-
-//     availability: true,
-//     rating: 4.0
-//   },
-
-//   {
-//     id: 3,
-//     name: "Innova",
-//     brand: "Toyota",
-//     model: 2014,
-//     type: "mpv",
-//     fuel: "diesel",
-//     transmission: "manual",
-
-//     location: "Kochi",
-//     price: 30000,
-//     category: "monthly",
-
-//     seats: 7,
-//     mileage: "15 km/l",
-
-//     description: "Spacious family vehicle, perfect for long trips.",
-
-//     owner: {
-//       name: "Owner 3",
-//       phone: "9999999993",
-//       verified: true
-//     },
-
-//     images: [
-//       "https://imgd.aeplcdn.com/1280x720/cw/cars/discontinued/toyota/innova-2013-2014.jpg"
-//     ],
-
-//     availability: true,
-//     rating: 4.5
-//   },
-
-//   {
-//     id: 4,
-//     name: "Benz E-Class",
-//     brand: "Mercedes-Benz",
-//     model: 2015,
-//     type: "sedan",
-//     fuel: "diesel",
-//     transmission: "automatic",
-
-//     location: "Malappuram",
-//     price: 6000,
-//     category: "event",
-
-//     seats: 5,
-//     mileage: "12 km/l",
-
-//     description: "Luxury sedan, perfect for weddings and events.",
-
-//     owner: {
-//       name: "Owner 4",
-//       phone: "9999999994",
-//       verified: true
-//     },
-
-//     images: [
-//       "https://imgd.aeplcdn.com/664x374/ec/48/E3/19188/img/m/Mercedes-Benz-E-Class-Right-Front-Three-Quarter-53511_ol.jpg"
-//     ],
-
-//     availability: true,
-//     rating: 4.8
-//   },
-
-//   {
-//     id: 5,
-//     name: "Wagon-R",
-//     brand: "Maruti Suzuki",
-//     model: 2016,
-//     type: "hatchback",
-//     fuel: "petrol",
-//     transmission: "manual",
-
-//     location: "Kozhikode",
-//     price: 28000,
-//     category: "monthly",
-
-//     seats: 5,
-//     mileage: "21 km/l",
-
-//     description: "Comfortable and reliable car for long-term use.",
-
-//     owner: {
-//       name: "Owner 5",
-//       phone: "9999999995",
-//       verified: false
-//     },
-
-//     images: [
-//       "https://imgd.aeplcdn.com/664x374/cw/ec/9709/Maruti-Suzuki-Wagon-R-10-Left-Front-Three-Quarter-88890.jpg"
-//     ],
-
-//     availability: true,
-//     rating: 4.1
-//   }
-// ];
-
 app.get('/api/vehicles', async (req, res) => {
   const vehicles = await Vehicle.find();
   res.json(vehicles);
@@ -189,9 +42,80 @@ app.post('/api/vehicles', async (req, res) => {
   res.json(newVehicle);
 })
 
+app.post('/api/signup', async (req, res) => {
+  try {
+    const { name, email, password, role } = req.body;
+    const existingUser = await User.findOne({ email })
+
+    if (existingUser) {
+      return res.status(400).json({
+        message: "Email already registered"
+      })
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      role
+    })
+    await newUser.save();
+
+    const token = jwt.sign(
+      { id: newUser._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    )
+
+    res.json({
+      token,
+      user: {
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role
+      },
+      message: "User registered successfully"
+    })
+  } catch (err) {
+    return res.status(500).json({ message: "Server Error" })
+  }
+})
+
+app.post("/api/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Password not matching" });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.json({
+      token,
+      user: {
+        name: user.name,
+        role: user.role,
+        email: user.email
+      },
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 require("dotenv").config()
 const mongoose = require("mongoose")
-
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Mongo DB Connected"))
-  .then((err) => console.log(err))
+  .catch((err) => console.log(err))

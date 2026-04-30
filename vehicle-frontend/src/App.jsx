@@ -7,6 +7,9 @@ import FilteredVehicles from "./pages/FilteredVehicles"
 import BookVehiclePage from "./pages/BookVehiclePage"
 import BookingSuccessPage from "./pages/BookingSuccessPage"
 import AddVehiclePage from "./pages/AddVehiclePage"
+import Signup from "./pages/Signup"
+import Login from "./pages/Login"
+import Profile from "./pages/Profile"
 
 function App() {
   return(
@@ -19,6 +22,10 @@ function App() {
       <Route path="/booking/:id" element={<BookVehiclePage/>}/>
       <Route path="/booking-success" element={<BookingSuccessPage/>} />
       <Route path="/add-vehicle" element={<AddVehiclePage/>} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/profile" element={<Profile/>} />
+
     </Routes>
     </BrowserRouter>
   )
