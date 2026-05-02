@@ -9,16 +9,35 @@ import { useEffect, useState } from 'react';
 
 function Home() {
 
-
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(true);
   const [vehicles, setVehicles] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/vehicles").then((res => res.json())).then((data => setVehicles(data)))
+    const fetchVehicles = async () => {
+      try {
+        const res = await fetch("http://localhost:3001/api/vehicles")
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch vehicles");
+        }
+        const data = await res.json();
+        setVehicles(data);
+
+      } catch (error) {
+        console.error(error)
+        setError("Unable to fetch vehicles")
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchVehicles();
   }, [])
-  
+
+
+
   return (
     <div>
-
       <section className="relative h-[100vh] flex items-center">
 
         {/* Background Image */}
@@ -52,8 +71,10 @@ function Home() {
         </div>
       </section>
 
-
+      {loading && <p className='text-center mt-10'>Loading vehicles...</p>}
+      {error && <p className='text-center mt-10 text-red-500'>{error}</p>}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
+
         {vehicles.map((v) => (
           <VehicleCard key={v._id} vehicle={v} />
         ))}

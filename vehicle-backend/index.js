@@ -36,7 +36,7 @@ app.get('/api/vehicles', async (req, res) => {
   const vehicles = await Vehicle.find();
   res.json(vehicles);
 })
-app.post('/api/vehicles', async (req, res) => {
+app.post('/api/vehicles', verifyLogin, async (req, res) => {
   const newVehicle = new Vehicle(req.body);
   await newVehicle.save();
   res.json(newVehicle);

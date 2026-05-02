@@ -30,7 +30,18 @@ sticky top-0 z-50 transition-all duration-300 hover:bg-gray-200 transition-all d
       <div className="flex items-center gap-3">
 
         <button
-          onClick={() => navigate("/add-vehicle")}
+          onClick={() => {
+            if(!user){
+              navigate('/login');
+              return;
+            }
+            if(user.role !== "provider"){
+              alert("only providers can add vehicles , please login as provider");
+              navigate("/signup");
+              return;
+            }
+            navigate("/add-vehicle")
+          }}
           className="text-gray-700 hover:text-black font-medium"
         >
           Add a Vehicle

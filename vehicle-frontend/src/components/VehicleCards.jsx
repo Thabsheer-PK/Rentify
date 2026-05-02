@@ -1,15 +1,24 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MapPin, Star } from 'lucide-react'
+import { useAuth } from "../context/AuthContext"
 
 function VehicleCard({ vehicle }) {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   if (!vehicle) return null;
 
   return (
     <div
-      onClick={() => navigate(`/vehicle/${vehicle._id}`)}
+      onClick={() => {
+        if (!user) {
+          alert("Please login..")
+          navigate("/login");
+          return;
+        }
+        navigate(`/vehicle/${vehicle._id}`)
+      }}
       className="cursor-pointer bg-white rounded-2xl shadow-md overflow-hidden 
                  hover:shadow-xl transition duration-300 transform hover:-translate-y-1"
     >
