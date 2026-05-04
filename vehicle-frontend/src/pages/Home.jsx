@@ -4,11 +4,16 @@ import heroBg from '../assets/logos/hero-bg.jpg'
 import HeroSearch from '../components/HeroSearch'
 // import vehicle from '../data/vehicle'
 import { useEffect, useState } from 'react';
+import { Link } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 
 
 function Home() {
 
+  const navigate = useNavigate();
+  const {user} = useAuth();
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(true);
   const [vehicles, setVehicles] = useState([]);
@@ -16,7 +21,7 @@ function Home() {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/vehicles")
+        const res = await fetch("https://rentify-le72.onrender.com")
 
         if (!res.ok) {
           throw new Error("Failed to fetch vehicles");
@@ -38,7 +43,7 @@ function Home() {
 
   return (
     <div>
-      <section className="relative h-[100vh] flex items-center">
+      <section className="relative h-[92vh] flex items-center">
 
         {/* Background Image */}
         <img
@@ -79,8 +84,38 @@ function Home() {
           <VehicleCard key={v._id} vehicle={v} />
         ))}
       </div>
+      <div className="bg-blue-900 mt-2">
+        <div className="container py-16 text-center">
+          <h2 className="text-2xl font-bold md:text-3xl text-white">Own a vehicle? Start earning today!</h2>
+          <p className="mx-auto mt-3 max-w-md text-white ">
+            List your vehicle on DriveKerala and earn money. Shops and individuals welcome.
+          </p>
 
+          <button
+            onClick={() => {
+              if (!user) {
+                navigate("/login");
+                return;
+              }
+              if (user.role !== "provider") {
+                alert("Only providers can add vehicles");
+                return;
+              }
+              navigate("/add-vehicle");
+
+
+            }}
+            className="mt-6 bg-orange-600 text-white px-6 py-3 rounded-2xl cursor-pointer group">
+            List Your Vehicle — It's Free
+          </button>
+
+
+        </div>
+
+      </div>
     </div>
+
+
   )
 }
 

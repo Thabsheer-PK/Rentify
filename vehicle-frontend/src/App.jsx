@@ -1,4 +1,4 @@
-import { BrowserRouter,Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home"
 import VehicleDetailPage from "./pages/VehicleDetailPage"
 import './App.css'
@@ -10,23 +10,28 @@ import AddVehiclePage from "./pages/AddVehiclePage"
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
 import Profile from "./pages/Profile"
+import PrivateRoute from "./components/PrivateRoute"
 
 function App() {
-  return(
+  return (
     <BrowserRouter>
-    <Navbar />
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/vehicle/:id" element={<VehicleDetailPage />} />
-      <Route path="/vehicles" element={<FilteredVehicles />}/>
-      <Route path="/booking/:id" element={<BookVehiclePage/>}/>
-      <Route path="/booking-success" element={<BookingSuccessPage/>} />
-      <Route path="/add-vehicle" element={<AddVehiclePage/>} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/profile" element={<Profile/>} />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/vehicle/:id" element={<VehicleDetailPage />} />
+        <Route path="/vehicles" element={<FilteredVehicles />} />
+        <Route path="/booking/:id" element={<BookVehiclePage />} />
+        <Route path="/booking-success" element={<BookingSuccessPage />} />
+        <Route path="/add-vehicle" element={
+          <PrivateRoute>
+            <AddVehiclePage />
+          </PrivateRoute>
+        } />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
 
-    </Routes>
+      </Routes>
     </BrowserRouter>
   )
 }

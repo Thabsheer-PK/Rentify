@@ -5,10 +5,12 @@ import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+
   const { user } = useAuth();
   console.log("user in nav", user)
   return (
-    <nav className="flex justify-between items-center px-8 py-3 
+    <nav className="flex justify-between items-center px-5 md:px-8 py-3 
 bg-white/70 backdrop-blur-md 
 border-b border-white/20 
 sticky top-0 z-50 transition-all duration-300 hover:bg-gray-200 transition-all duration-200">
@@ -17,7 +19,7 @@ sticky top-0 z-50 transition-all duration-300 hover:bg-gray-200 transition-all d
         onClick={() => navigate("/")}
         className="flex items-center cursor-pointer select-none"
       >
-        <h1 className="relative text-[24px] font-semibold tracking-tight text-gray-900 group">
+        <h1 className="relative text-[22px] md:text-[24px] font-semibold tracking-tight text-gray-900 group transition-all duration-300">
 
           <span className="font-bold">Rent</span>
           <span className="text-orange-500 font-bold">ify</span>
@@ -27,25 +29,7 @@ sticky top-0 z-50 transition-all duration-300 hover:bg-gray-200 transition-all d
       </div>
 
       {/* Right Side */}
-      <div className="flex items-center gap-3">
-
-        <button
-          onClick={() => {
-            if(!user){
-              navigate('/login');
-              return;
-            }
-            if(user.role !== "provider"){
-              alert("only providers can add vehicles , please login as provider");
-              navigate("/signup");
-              return;
-            }
-            navigate("/add-vehicle")
-          }}
-          className="text-gray-700 hover:text-black font-medium"
-        >
-          Add a Vehicle
-        </button>
+      <div className="hidden md:flex items-center gap-3">
 
         {/* If NOT logged in */}
         {!user ? (
@@ -80,6 +64,57 @@ sticky top-0 z-50 transition-all duration-300 hover:bg-gray-200 transition-all d
             <span className="font-medium text-gray-800">
               {user.name}
             </span>
+          </button>
+        )}
+      </div>
+
+      <button className="md:hidden"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {
+          isOpen ? "X" : "☰"
+        }
+
+      </button>
+
+      <div
+        className={`fixed right-0 top-14 z-40 bg-white shadow-lg rounded-2xl rounded-tr-none rounded-br-none
+  w-56 p-4 flex flex-col gap-4
+  transform transition-all duration-300 ease-in-out
+  ${isOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10 pointer-events-none"}`}
+      >
+
+        {!user ? (
+          <>
+            <button
+              onClick={() => {
+                navigate("/login");
+                setIsOpen(false);
+              }}
+              className="text-left hover:text-orange-500 transition"
+            >
+              Login
+            </button>
+
+            <button
+              onClick={() => {
+                navigate("/signup");
+                setIsOpen(false);
+              }}
+              className="text-left hover:text-orange-500 transition"
+            >
+              Sign Up
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={() => {
+              navigate("/profile");
+              setIsOpen(false);
+            }}
+            className="text-left hover:text-orange-500 transition"
+          >
+            {user.name}
           </button>
         )}
       </div>
