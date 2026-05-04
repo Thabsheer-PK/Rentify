@@ -21,7 +21,11 @@ function Home() {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
+<<<<<<< HEAD
         const res = await fetch("https://rentify-le72.onrender.com")
+=======
+        const res = await fetch("https://rentify-le72.onrender.com/api/vehicles")
+>>>>>>> 6ff93fb (sidebar on mobile, and backend deployed)
 
         if (!res.ok) {
           throw new Error("Failed to fetch vehicles");
