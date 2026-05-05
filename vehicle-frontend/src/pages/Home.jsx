@@ -44,15 +44,14 @@ function Home() {
 
 
   return (
-    <div>
-      <section className="relative h-[92vh] flex items-center overflow-hidden">
-
-        {/* Background Image */}
-        <img
-          src={heroBg}
-          alt="Kerala road"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+    <div className='overflow-hidden'>
+      <section className="relative h-[92vh] flex items-center">
+        <div className="absolute inset-0">
+          <img
+            src={heroBg}
+            className="w-full h-full object-cover"
+          />
+        </div>
 
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/60"></div>

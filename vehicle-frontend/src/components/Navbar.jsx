@@ -11,9 +11,9 @@ function Navbar() {
   console.log("user in nav", user)
   return (
     <nav className="flex justify-between items-center px-5 md:px-8 py-3 
-bg-white/70 backdrop-blur-md 
-border-b border-white/20 
-sticky top-0 z-50">
+bg-white/90 backdrop-blur-md 
+border-b border-black/20  
+sticky top-0 z-[900]">
 
       <div
         onClick={() => navigate("/")}
