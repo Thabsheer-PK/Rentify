@@ -5,6 +5,17 @@ const bcrypt = require("bcrypt")
 const User = require("./models/Users")
 const jwt = require("jsonwebtoken")
 
+
+const cors = require("cors");
+
+app.use(cors({
+  origin: "https://rentify-green-kappa.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
+app.use(express.json());
+
 const verifyLogin = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) return res.status(401).json({ message: "No token" });
@@ -23,21 +34,18 @@ app.get("/", (req, res) => {
   res.send("API is working");
 });
 
-app.listen(3001, "0.0.0.0", () => {
-  console.log("Server running on port 3001");
-});
-
-const cors = require("cors");
-app.use(cors());
-
-app.use(express.json());
-
 app.get('/api/vehicles', async (req, res) => {
   const vehicles = await Vehicle.find();
   res.json(vehicles);
 })
+
 app.post('/api/vehicles', verifyLogin, async (req, res) => {
-  const newVehicle = new Vehicle(req.body);
+  const userId = req.user.id;
+  const newVehicle = new Vehicle({
+    ...req.body,
+    owner: userId
+  })
+
   await newVehicle.save();
   res.json(newVehicle);
 })
@@ -47,6 +55,9 @@ app.post('/api/signup', async (req, res) => {
     const { name, email, password, role } = req.body;
     const existingUser = await User.findOne({ email })
 
+    if (!name || !email || !password || !role) {
+      return res.status(400).json({ message: "All fields are required" })
+    }
     if (existingUser) {
       return res.status(400).json({
         message: "Email already registered"
@@ -119,3 +130,8 @@ const mongoose = require("mongoose")
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Mongo DB Connected"))
   .catch((err) => console.log(err))
+
+
+app.listen(3001, "0.0.0.0", () => {
+  console.log("Server running on port 3001");
+});
