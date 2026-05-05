@@ -20,6 +20,7 @@ function Home() {
   const [vehicles, setVehicles] = useState([]);
 
   useEffect(() => {
+    console.log(import.meta.env.VITE_API_URL);
     const fetchVehicles = async () => {
       try {
         const res = await fetch(`${API_URL}/api/vehicles`)
