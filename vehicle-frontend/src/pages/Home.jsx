@@ -45,13 +45,13 @@ function Home() {
 
   return (
     <div>
-      <section className="relative h-[92vh] flex items-center">
+      <section className="relative h-[92vh] flex items-center overflow-hidden">
 
         {/* Background Image */}
         <img
           src={heroBg}
           alt="Kerala road"
-          className="absolute w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
 
         {/* Dark Overlay */}
@@ -89,7 +89,7 @@ function Home() {
       <div className="bg-blue-900 mt-4 px-4">
         <div className="max-w-4xl mx-auto py-12 text-center">
 
-          <h2 className="text-xl p-2xl sm:text-2xl md:text-3xl font-bold text-white leading-snug">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white leading-snug">
             Own a vehicle? Start earning today!
           </h2>
 
