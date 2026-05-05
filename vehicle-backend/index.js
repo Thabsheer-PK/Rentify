@@ -8,9 +8,22 @@ const jwt = require("jsonwebtoken")
 
 const cors = require("cors");
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://rentify-green-kappa.vercel.app"
+];
+
 app.use(cors({
-  origin: "https://rentify-green-kappa.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: function (origin, callback) {
+    // allow requests with no origin (like Postman)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 
