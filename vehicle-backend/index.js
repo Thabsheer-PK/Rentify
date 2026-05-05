@@ -5,8 +5,14 @@ const bcrypt = require("bcrypt")
 const User = require("./models/Users")
 const jwt = require("jsonwebtoken")
 
-
 const cors = require("cors");
+
+
+require("dotenv").config()
+const mongoose = require("mongoose")
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("Mongo DB Connected"))
+  .catch((err) => console.log(err))
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -136,13 +142,6 @@ app.post("/api/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
-
-require("dotenv").config()
-const mongoose = require("mongoose")
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("Mongo DB Connected"))
-  .catch((err) => console.log(err))
 
 
 app.listen(3001, "0.0.0.0", () => {
