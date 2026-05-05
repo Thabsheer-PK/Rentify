@@ -68,15 +68,34 @@ sticky top-0 z-[900]">
         )}
       </div>
 
-      <button className="md:hidden"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {
-          isOpen ? "X" : "☰"
-        }
+       {/* mobile hambermenu and if user logged, then no hambermenu needed  */}
 
-      </button>
+      {!user ? (
+        <button className="md:hidden"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {
+            isOpen ? "X" : "☰"
+          }
 
+        </button>
+      ) : (
+        <button
+          onClick={() => navigate("/profile")}
+          className="flex items-center gap-2 px-3 py-1.5 border border-gray-300 rounded-lg hover:bg-gray-100 transition md:hidden"
+        >
+          <div className="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center">
+            <User size={16} />
+          </div>
+
+          <span className="font-medium text-gray-800">
+            {user.name}
+          </span>
+        </button>
+      )
+      }
+
+       {/* hambermenu list of items */}
       <div
         className={`fixed right-0 top-14 z-40 bg-white shadow-lg rounded-2xl rounded-tr-none rounded-br-none
   w-56 p-4 flex flex-col gap-4
@@ -84,7 +103,7 @@ sticky top-0 z-[900]">
   ${isOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10 pointer-events-none"}`}
       >
 
-        {!user ? (
+        {!user &&
           <>
             <button
               onClick={() => {
@@ -106,17 +125,8 @@ sticky top-0 z-[900]">
               Sign Up
             </button>
           </>
-        ) : (
-          <button
-            onClick={() => {
-              navigate("/profile");
-              setIsOpen(false);
-            }}
-            className="text-left hover:text-orange-500 transition"
-          >
-            {user.name}
-          </button>
-        )}
+
+        }
       </div>
     </nav>
   );

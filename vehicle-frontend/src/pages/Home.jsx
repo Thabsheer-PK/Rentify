@@ -44,7 +44,7 @@ function Home() {
 
 
   return (
-    <div className='overflow-hidden'>
+    <div>
       <section className="relative h-[92vh] flex items-center">
         <div className="absolute inset-0">
           <img

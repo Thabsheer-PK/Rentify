@@ -23,14 +23,31 @@ const Vehicles = () => {
   );
 
   const [vehicles, setVehicles] = useState([]);
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
 
-  useEffect(()=>{
-    fetch(`${API_URL}/api/vehicles`).then((res=> res.json())).then((data=> setVehicles(data)))
-  },[])
+  useEffect(() => {
+    // fetch(`${API_URL}/api/vehicles`).then((res => res.json())).then((data => setVehicles(data)))
+    const fetchVehicles = async () => {
+      try {
+        setLoading(true)
+        const res = await fetch(`${API_URL}/api/vehicles`);
+        if (!res.ok) {
+          throw new Error("Falied to fetch vehicles")
+        }
+        const data = await res.json();
+        setVehicles(data)
+      } catch (error) {
+        console.error(error);
+      } finally {
+
+        setLoading(false)
+      }
+    }
+    fetchVehicles();
+  }, [])
 
   //  Filter logic
   const filtered = useMemo(() => {
@@ -257,7 +274,12 @@ const Vehicles = () => {
           <div className="flex-1">
 
             {loading ? (
-              <p className="text-center py-10">Loading vehicles...</p>
+              <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="text-center mt-20">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto"></div>
+                </div>
+              </div>
+
             ) : filtered.length === 0 ? (
               <div className="text-center py-20">
                 <p className="text-lg font-medium">
