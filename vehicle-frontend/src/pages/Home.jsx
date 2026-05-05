@@ -13,7 +13,7 @@ import { useAuth } from '../context/AuthContext';
 function Home() {
 
   const navigate = useNavigate();
-  const {user} = useAuth();
+  const { user } = useAuth();
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(true);
   const [vehicles, setVehicles] = useState([]);
@@ -84,11 +84,16 @@ function Home() {
           <VehicleCard key={v._id} vehicle={v} />
         ))}
       </div>
-      <div className="bg-blue-900 mt-2">
-        <div className="container py-16 text-center">
-          <h2 className="text-2xl font-bold md:text-3xl text-white">Own a vehicle? Start earning today!</h2>
-          <p className="mx-auto mt-3 max-w-md text-white ">
-            List your vehicle on DriveKerala and earn money. Shops and individuals welcome.
+      <div className="bg-blue-900 mt-4 px-4">
+        <div className="max-w-4xl mx-auto py-12 text-center">
+
+          <h2 className="text-xl p-10 sm:text-2xl md:text-3xl font-bold text-white leading-snug">
+            Own a vehicle? Start earning today!
+          </h2>
+
+          <p className="mt-3 text-sm sm:text-base md:text-lg text-white/90 max-w-md mx-auto">
+            List your vehicle on DriveKerala and earn money.
+            Shops and individuals are welcome.
           </p>
 
           <button
@@ -102,16 +107,14 @@ function Home() {
                 return;
               }
               navigate("/add-vehicle");
-
-
             }}
-            className="mt-6 bg-orange-600 text-white px-6 py-3 rounded-2xl cursor-pointer group">
+            className="mt-6 w-full sm:w-auto bg-orange-600 hover:bg-orange-700 transition 
+                 text-white px-6 py-3 rounded-xl font-medium shadow-md"
+          >
             List Your Vehicle — It's Free
           </button>
 
-
         </div>
-
       </div>
     </div>
 

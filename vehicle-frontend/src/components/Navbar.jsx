@@ -13,7 +13,7 @@ function Navbar() {
     <nav className="flex justify-between items-center px-5 md:px-8 py-3 
 bg-white/70 backdrop-blur-md 
 border-b border-white/20 
-sticky top-0 z-50 transition-all duration-300 hover:bg-gray-200 transition-all duration-200">
+sticky top-0 z-50">
 
       <div
         onClick={() => navigate("/")}
