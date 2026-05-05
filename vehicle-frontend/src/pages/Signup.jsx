@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Car } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Signup() {
   const [loading, setLoading] = useState("")
   const [error, setError] = useState({})
@@ -56,7 +58,7 @@ function Signup() {
     try {
 
 
-      const res = await fetch("http://localhost:3001/api/signup", {
+      const res = await fetch(`${API_URL}/api/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -138,7 +140,7 @@ function Signup() {
                 className="w-full h-12 px-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-orange-400"
                 
               />
-              {error.name && <p className="text-red-500">{error.name}</p>}
+              {error.name && <p className="text-red-500 mt-2 text-sm font-medium">{error.name}</p>}
             </div>
 
             {/* Email */}
@@ -154,7 +156,7 @@ function Signup() {
                 onChange={handleChange}
                 className="w-full h-12 px-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-orange-400"
               />
-              {error.email && <p className="text-red-500">{error.email}</p>}
+              {error.email && <p className="text-red-500 mt-2 text-sm font-medium">{error.email}</p>}
             </div>
 
             {/* Password */}

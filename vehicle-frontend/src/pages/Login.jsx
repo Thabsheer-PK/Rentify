@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -48,7 +50,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch("https://rentify-le72.onrender.com/api/login", {
+      const res = await fetch(`${API_URL}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function AddVehiclePage() {
   const navigate = useNavigate();
 
@@ -79,7 +81,7 @@ function AddVehiclePage() {
       return;
     }
 
-    await fetch("http://localhost:3001/api/vehicles", {
+    await fetch(`${API_URL}/api/vehicles`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

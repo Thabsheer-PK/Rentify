@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
 import { ArrowLeft } from "lucide-react";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 function BookVehiclePage() {
   const [vehicles , setVehicles] = useState([])
 
   useEffect(()=>{
-    fetch("http://localhost:3001/api/vehicles").then((res => res.json())).then((data => setVehicles(data)))
+    fetch(`${API_URL}/api/vehicles`).then((res => res.json())).then((data => setVehicles(data)))
   },[])
   
   const { id } = useParams();

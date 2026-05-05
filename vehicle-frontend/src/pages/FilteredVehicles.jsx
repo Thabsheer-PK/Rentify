@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import VehicleCard from "../components/VehicleCards";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const locations = ["Kochi", "Thiruvananthapuram", "Kozhikode", "Thrissur", "Alappuzha", "Kollam", "Kannur", "Kottayam", "Palakkad", "Malappuram", "Wayanad"];
 const categories = [
   { value: "", label: "All Categories" },
@@ -27,7 +29,7 @@ const Vehicles = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(()=>{
-    fetch("http://localhost:3001/api/vehicles").then((res=> res.json())).then((data=> setVehicles(data)))
+    fetch(`${API_URL}/api/vehicles`).then((res=> res.json())).then((data=> setVehicles(data)))
   },[])
 
   //  Filter logic

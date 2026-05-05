@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Home() {
 
@@ -21,7 +22,7 @@ function Home() {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const res = await fetch("https://rentify-le72.onrender.com/api/vehicles")
+        const res = await fetch(`${API_URL}/api/vehicles`)
 
         if (!res.ok) {
           throw new Error("Failed to fetch vehicles");
@@ -87,7 +88,7 @@ function Home() {
       <div className="bg-blue-900 mt-4 px-4">
         <div className="max-w-4xl mx-auto py-12 text-center">
 
-          <h2 className="text-xl p-10 sm:text-2xl md:text-3xl font-bold text-white leading-snug">
+          <h2 className="text-xl p-2xl sm:text-2xl md:text-3xl font-bold text-white leading-snug">
             Own a vehicle? Start earning today!
           </h2>
 
