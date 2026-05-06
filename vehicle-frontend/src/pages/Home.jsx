@@ -77,7 +77,14 @@ function Home() {
         </div>
       </section>
 
-      {loading && <p className='text-center mt-10'>Loading vehicles...</p>}
+      {loading &&
+        <div className="h-30 flex items-center justify-center bg-gray-80">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-900 mt-15"></div>
+          </div>
+        </div>
+
+      }
       {error && <p className='text-center mt-10 text-red-500'>{error}</p>}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
 

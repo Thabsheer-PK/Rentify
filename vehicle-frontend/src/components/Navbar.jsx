@@ -13,7 +13,7 @@ function Navbar() {
     <nav className="flex justify-between items-center px-5 md:px-8 py-3 
 bg-white/90 backdrop-blur-md 
 border-b border-black/20  
-sticky top-0 z-[900]">
+sticky top-0 z-20">
 
       <div
         onClick={() => navigate("/")}
@@ -100,7 +100,7 @@ sticky top-0 z-[900]">
         className={`fixed right-0 top-14 z-40 bg-white shadow-lg rounded-2xl rounded-tr-none rounded-br-none
   w-56 p-4 flex flex-col gap-4
   transform transition-all duration-300 ease-in-out
-  ${isOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10 pointer-events-none"}`}
+  ${isOpen ? "opacity-100 translate-x-0" : "opacity-0 border-t border-black/50 pointer-events-none"}`}
       >
 
         {!user &&
