@@ -11,10 +11,12 @@ import Signup from "./pages/Signup"
 import Login from "./pages/Login"
 import Profile from "./pages/Profile"
 import PrivateRoute from "./components/PrivateRoute"
+import ScrollToTop from "./components/ScrollToTop"
 
 function App() {
   return (
     <BrowserRouter>
+    <ScrollToTop/>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

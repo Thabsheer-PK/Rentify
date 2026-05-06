@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import ScrollToTop from '../components/ScrollToTop';
 
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -45,8 +44,6 @@ function Home() {
 
 
   return (
-    <>
-      <ScrollToTop />
       <div>
         <section className="relative h-[92vh] flex items-center">
           <div className="absolute inset-0">
@@ -128,8 +125,6 @@ function Home() {
           </div>
         </div>
       </div>
-    </>
-
 
   )
 }

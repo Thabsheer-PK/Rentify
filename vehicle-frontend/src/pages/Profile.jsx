@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { User, Mail, ShieldCheck, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext"
-import ScrollToTop from "../components/ScrollToTop";
 
 function Profile() {
   const navigate = useNavigate();
@@ -41,8 +40,6 @@ function Profile() {
   };
 
   return (
-    <>
-    <ScrollToTop />
     <div className="min-h-screen bg-gray-100 px-4 py-10 flex justify-center">
       <div className="w-full max-w-xl bg-white border border-gray-200 shadow-sm rounded-3xl p-8">
 
@@ -119,7 +116,6 @@ function Profile() {
 
       </div>
     </div>
-    </>
   );
 }
 

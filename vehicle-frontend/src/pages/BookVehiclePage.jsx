@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import ScrollToTop from "../components/ScrollToTop";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -109,8 +108,6 @@ Total: ₹${total}
   };
 
   return (
-    <>
-      <ScrollToTop />
       <div className="max-w-4xl mx-auto px-4 py-8">
 
         {/* Back Button */}
@@ -278,7 +275,6 @@ Total: ₹${total}
 
         </div>
       </div>
-    </>
   );
 }
 

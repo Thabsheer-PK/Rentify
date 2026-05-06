@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import VehicleCard from "../components/VehicleCards";
-import ScrollToTop from "../components/ScrollToTop";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -30,7 +29,6 @@ const Vehicles = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     const fetchVehicles = async () => {
       try {
         setLoading(true)
@@ -88,8 +86,6 @@ const Vehicles = () => {
 
 
   return (
-    <>
-      <ScrollToTop />
       <div className="min-h-screen bg-gray-50">
 
         <div className="max-w-7xl mx-auto px-4 py-8">
@@ -187,7 +183,7 @@ const Vehicles = () => {
               {/* Clear */}
               <button
                 onClick={clearFilters}
-                className="text-red-500 text-sm"
+                className="text-red-500 text-sm cursor-pointer"
               >
                 Clear Filters
               </button>
@@ -308,7 +304,6 @@ const Vehicles = () => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 
