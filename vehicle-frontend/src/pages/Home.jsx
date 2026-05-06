@@ -111,7 +111,7 @@ function Home() {
                   return;
                 }
                 if (user.role !== "provider") {
-                  alert("Only providers can add vehicles");
+                  alert("Only providers can add vehicles, please signup as provider..");
                   return;
                 }
                 navigate("/add-vehicle");
