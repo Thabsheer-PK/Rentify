@@ -99,7 +99,7 @@ sticky top-0 z-20">
       <div
         className={`fixed right-0 top-14 z-40 bg-white shadow-lg rounded-2xl rounded-tr-none rounded-br-none
   w-56 p-4 flex flex-col gap-4
-  transform transition-all duration-300 ease-in-out
+  transform transition-all duration-300 ease-in-out overflow-hidden
   ${isOpen ? "opacity-100 translate-x-0" : "opacity-0 border-t border-black/50 pointer-events-none"}`}
       >
 
